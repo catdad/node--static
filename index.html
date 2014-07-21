@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+	<style>
+		html, body {
+			padding: 0;
+			margin: 0;
+			background: #e5e5e5;
+		}
+	</style>
+</head>
+<body>
+
+<pre>
+<script>
+document.writeln(window.innerWidth + ' x ' + window.innerHeight);
+
+for(var i in navigator){
+	if (typeof navigator[i] === 'string') document.writeln(navigator[i]);
+}
+
+</script>
+</pre>
+
+</body>
+</html>
