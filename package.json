@@ -1,0 +1,15 @@
+{
+  "name": "static",
+  "version": "0.0.0",
+  "description": "0.0.2",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~3.4.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kiril Vatev",
+  "license": "MIT"
+}
