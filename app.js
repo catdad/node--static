@@ -1,10 +1,15 @@
+/* jshint node: true, -W030 */
+
 var fs = require('fs');
 var express = require('express');
 var app = express();
+var path = require('path');
 
 var dir = process.argv[2] || __dirname;
 var directoryAccess = !!process.argv[3];
 var port = 81;
+
+dir = path.resolve(dir);
 
 app.configure(function(){
 	app.use(function(req, res, next){
@@ -13,13 +18,14 @@ app.configure(function(){
 	});
 	app.use(express.compress());
 	app.use(express.static(dir));
-	app.use(express.directory(dir),{
-		icons:true,
+	
+    directoryAccess && app.use(express.directory(dir) /*,{
+		icons: true,
 		filter: function(a, b, c){
 			console.log(a,b,c);
-			return false;
+			return true;
 		}
-	});
+	}*/);
 	
 	//app.use(app.router);
 });
@@ -29,4 +35,4 @@ app.configure(function(){
 // });
 
 app.listen(port);
-console.log('port', port, dir, directoryAccess);
+console.log('port:', port, ' - ', dir, directoryAccess);
