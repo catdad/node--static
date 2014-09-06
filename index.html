@@ -1,27 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes"/>
 	<style>
 		html, body {
-			padding: 0;
+			padding: 5px 10px;
 			margin: 0;
 			background: #e5e5e5;
 		}
+        span {
+            font-weight: bold;
+        }
+        pre {
+            width: 100%;
+            border: 1px solid gray;
+            padding: 5px;
+            overflow: auto;
+            border-radius: 3px;
+            background: #f5f5f5;
+            box-sizing: border-box;
+            margin: 5px 0px 15px;
+        }
 	</style>
 </head>
 <body>
 
-<pre>
-<script>
-document.writeln(window.innerWidth + ' x ' + window.innerHeight);
+<div>
+    <script>
+        function write(name, msg){
+            console.log(i);
+            if (name === 'mimeTypes') {
+                msg = [].map.call(msg, function(el){
+                    return {
+                        description: el.description,
+                        type: el.type
+                    }
+                });
+            } else if (name === 'plugins'){
+                msg = [].map.call(msg, function(el){
+                    return {
+                        name: el.name,
+                        description: el.description,
+                        filename: el.filename
+                    }
+                });
+            } else if (typeof msg === 'function') {
+                msg = 'function';
+            }
+            
+            var nameElem = document.createElement('span');
+            var valueElem = document.createElement('pre');
+            
+            nameElem.innerHTML = name;
+            valueElem.innerHTML = JSON.stringify(msg, undefined, 2);
+            
+            document.body.appendChild(nameElem);
+            document.body.appendChild(valueElem);
+        }
 
-for(var i in navigator){
-	if (typeof navigator[i] === 'string') document.writeln(navigator[i]);
-}
+        write('viewport', { width: window.innerWidth , height: window.innerHeight });
 
-</script>
-</pre>
+        for(var i in navigator){
+    //        if (typeof navigator[i] === 'string')
+                write(i, navigator[i]);
+        }
+    </script>
+</div>
 
 </body>
 </html>

@@ -1,9 +1,9 @@
 /* jshint node: true, -W030 */
 
 var fs = require('fs');
+var path = require('path');
 var express = require('express');
 var app = express();
-var path = require('path');
 
 var dir = process.argv[2] || __dirname;
 var directoryAccess = !!process.argv[3];
@@ -19,13 +19,13 @@ app.configure(function(){
 	app.use(express.compress());
 	app.use(express.static(dir));
 	
-    directoryAccess && app.use(express.directory(dir) /*,{
+    directoryAccess && app.use(express.directory(dir),{
 		icons: true,
 		filter: function(a, b, c){
 			console.log(a,b,c);
 			return true;
 		}
-	}*/);
+	});
 	
 	//app.use(app.router);
 });
