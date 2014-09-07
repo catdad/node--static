@@ -7,65 +7,75 @@
 			padding: 5px 10px;
 			margin: 0;
 			background: #e5e5e5;
+            color: #555;
 		}
         span {
             font-weight: bold;
+            font-family: Helvetica, Ariel, sans-serif;
+            letter-spacing: .01em;
         }
         pre {
-            width: 100%;
-            border: 1px solid gray;
-            padding: 5px;
-            overflow: auto;
-            border-radius: 3px;
-            background: #f5f5f5;
             box-sizing: border-box;
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #888;
+            border-radius: 3px;
             margin: 5px 0px 15px;
+            background: #f5f5f5;
+            font-family: Consolas, Menlo, monospace;
+            font-size: 12px;
+            overflow: auto;
         }
 	</style>
 </head>
 <body>
 
-<div>
-    <script>
-        function write(name, msg){
-            console.log(i);
-            if (name === 'mimeTypes') {
-                msg = [].map.call(msg, function(el){
-                    return {
-                        description: el.description,
-                        type: el.type
-                    }
-                });
-            } else if (name === 'plugins'){
-                msg = [].map.call(msg, function(el){
-                    return {
-                        name: el.name,
-                        description: el.description,
-                        filename: el.filename
-                    }
-                });
-            } else if (typeof msg === 'function') {
+<script>
+    function write(name, msg, context){
+        if (name === 'mimeTypes') {
+            msg = [].map.call(msg, function(el){
+                return {
+                    description: el.description,
+                    type: el.type
+                }
+            });
+        } else if (name === 'plugins'){
+            msg = [].map.call(msg, function(el){
+                return {
+                    name: el.name,
+                    description: el.description,
+                    filename: el.filename
+                }
+            });
+        } else if (typeof msg === 'function') {
+            try {
+                msg = msg.call(context);
+            } catch (e) {
+                console.log(name, e);
                 msg = 'function';
             }
-            
-            var nameElem = document.createElement('span');
-            var valueElem = document.createElement('pre');
-            
-            nameElem.innerHTML = name;
-            valueElem.innerHTML = JSON.stringify(msg, undefined, 2);
-            
-            document.body.appendChild(nameElem);
-            document.body.appendChild(valueElem);
         }
 
+        var nameElem = document.createElement('span');
+        var valueElem = document.createElement('pre');
+
+        nameElem.innerHTML = name;
+        valueElem.innerHTML = JSON.stringify(msg, undefined, 2);
+
+        document.body.appendChild(nameElem);
+        document.body.appendChild(valueElem);
+    }
+
+    function getData(){
         write('viewport', { width: window.innerWidth , height: window.innerHeight });
 
         for(var i in navigator){
-    //        if (typeof navigator[i] === 'string')
-                write(i, navigator[i]);
-        }
-    </script>
-</div>
+            write(i, navigator[i], navigator);
+        }    
+    }
+
+    getData();
+</script>
 
 </body>
 </html>
