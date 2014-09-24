@@ -1,15 +1,15 @@
 /* jshint node: true, -W030 */
 
-var fs = require('fs');
-var path = require('path');
-var chalk = require('chalk');
-var express = require('express');
-var app = express();
+var fs = require('fs'),
+    path = require('path'),
+    chalk = require('chalk'),
+    express = require('express'),
+    app = express();
 
 // set default values for the global variables
-var dir = __dirname;
-var directoryAccess = false;
-var port = 81;
+var dir = __dirname,
+    directoryAccess = false,
+    port = 81;
 
 process.argv.forEach(function(el, i){
     if (i < 2) {
